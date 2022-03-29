@@ -6,6 +6,16 @@ An important thing to know at the beginning of this is that if you're going to u
 
 To use this example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
 
+I am also using the 1.x version of Terraform. 
+
+```
+❯ terraform --version
+Terraform v1.1.7
+on darwin_arm64
++ provider registry.terraform.io/cloudflare/cloudflare v3.11.0
++ provider registry.terraform.io/hashicorp/external v2.2.2
+```
+
 1. First list any created (aka non-managed) rulesets.
 
 > I have exported variables in the below call. 
@@ -59,12 +69,14 @@ cp -via ~/cloudflare_terraform/terraform.tfvars.example rulesets/terraform.tfvar
 
 2. Populate `terraform.tfvars` with values applicable to you.
 
-3. Run a `terraform plan` to see what the configuration will do
+3. Run `terraform init` to initialize Terraform in the current directory.  
+
+4. Run a `terraform plan` to see what the configuration will do
 
 It will setup an exclusion for Cloudflare Managed Ruleset at the zone level
 It will execute the Cloudflare Managed Ruleset at the zone level
 It will execute the OWASP Cloudflare Ruleset at the zone level with Paranoia Level 1 and Anomaly Score >60
 
-4. Run `terraform apply`
+5. Run `terraform apply`
 
-5. Make changes as needed and re-run steps 3 and 4. If you need to remove the configration 
+6. Make changes as needed and re-run steps 3 and 4. If you need to remove the configration 
