@@ -42,6 +42,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 # Using external data source as rulesets do not currently have one
 data "external" "cf_managed_ruleset_id" {
   program = ["bash", "${path.cwd}/scripts/cf_managed_rules_id.sh"]
+  # In the external data source query parameters are passed to the program as STDIN
+  # Here we map terraform variables to ones the script can use
   query = {
     cf_user    = "${var.cloudflare_email}"
     cf_zone_id = "${var.cloudflare_zone_id}"
