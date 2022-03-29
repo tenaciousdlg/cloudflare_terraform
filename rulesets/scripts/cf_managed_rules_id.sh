@@ -1,4 +1,5 @@
 #!/bin/bash
+# Credit for inspiration to https://gist.github.com/irvingpop/968464132ded25a206ced835d50afa6b
 set -e 
 
 # Error function that will respond with error message if check_dep function fails
