@@ -4,7 +4,9 @@
 
 An important thing to know at the beginning of this is that if you're going to use Terraform to manage the new WAF, you must only use Terraform. If you've already created a ruleset (toggled on the new WAF) in the dashboard, you must delete that ruleset first so that it can then be created with Terraform. That needs to be done via the API with two calls.
 
-1. First list any created (aka non-managed) rulesets. I have exported variables in the below call. 
+1. First list any created (aka non-managed) rulesets.
+
+> I have exported variables in the below call. 
 
 ```
 zone_id=XXXXXXXXXX
