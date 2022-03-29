@@ -4,6 +4,8 @@
 
 An important thing to know at the beginning of this is that if you're going to use Terraform to manage the new WAF, you must only use Terraform. If you've already created a ruleset (toggled on the new WAF) in the dashboard, you must delete that ruleset first so that it can then be created with Terraform. That needs to be done via the API with two calls.
 
+To use this example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
+
 1. First list any created (aka non-managed) rulesets.
 
 > I have exported variables in the below call. 
@@ -20,7 +22,7 @@ curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
 
 ```
 
-2. Use jq t filter to just the "id" fields on the rulesets listed from step 1. If nothing lists you can move onto the next section
+2. Use jq to filter to just the "id" fields on the rulesets listed from step 1. If nothing lists you can move onto the next section
 
 ```
 curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
@@ -43,7 +45,7 @@ for id in $(curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/ru
      -H "Content-Type: application/json" | jq; done
 ```
 
-## How to use this repository 
+## Using this Repository (after doing the above clean up)
 
 1. Copy ../terraform.tfvars.example to the current directory
 
