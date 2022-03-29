@@ -6,6 +6,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   kind        = "zone"
   phase       = "http_request_firewall_managed"
 
+# Example of skipping a ruleset given pieces of criteria
+# In this case the Cloudflare Managed Rulesets will be skipped if the hostname is domain.xyz and the path is skip=rulesets
   rules {
     action = "skip"
     action_parameters {
@@ -16,6 +18,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
     enabled = true
   }
 
+# Example of setting a ruleset to execute. In this case the Cloudflare Managed Ruleset
+# An override is used to alter the behavior of the Wordpress Cloudflare Managed Ruleset
   rules {
     action = "execute"
     action_parameters {
@@ -35,6 +39,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   }
 }
 
+# Using external data source as rulesets do not currently have one
 data "external" "cf_managed_ruleset_id" {
   program = ["bash", "${path.cwd}/scripts/cf_managed_rules_id.sh"]
   query = {
