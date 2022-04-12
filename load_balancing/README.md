@@ -2,7 +2,16 @@
 
 This walkthrough demonstrates a Cloudflare Load Balancer visitable at a hostname, such as `lb.example.com`, that has three pools in geographically distinct regions in Google Cloud (GCP). The load balancer is using Random [traffic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/). Each pool has a single instance running Contianer Optimized OS that has a [HTML container](https://hub.docker.com/r/tenaciousdlg/html-container) visitable. The HTML container echos the region that it is in. 
 
-There are [custom rules](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/create-rules/) in place on the load balancer for the three regions. The custom rule is for a cookie override. You can pass a session=region cookie where region equals either us, emea, or apac. Adding this cookie will cause all traffic to go to that particular pool. Remove 
+There are [custom rules](https://developers.cloudflare.com/load-balancing/additional-options/load-balancing-rules/create-rules/) in place on the load balancer for the three regions. The custom rule is for a cookie override. You can pass a `session=region` cookie where region equals either `us`, `emea`, or `apac`. Adding this cookie will cause all traffic to go to that particular pool. Remove the coookie to return the load balancer to the default behavior.
+
+## Terraform Resources
+
+[Cloudflare Load Balancer](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer)
+[Cloudflare Load Balancer Pool](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_pool)
+[Cloudflare Load Balancer Pool Monitor](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_monitor)
+[Google Compute Instance](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance)
+[Google Compute Image Data Source](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_image)
+[Random ID](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id)
 
 ## Pre-requisites
 
