@@ -32,7 +32,7 @@ on darwin_arm64
 ├── terraform.tfvars
 └── variables.tf
 
-0 directories, 10 files
+0 directories, 8 files
 ```
 
 * `load_balancer.tf` contains the config for the Cloudflare Load Balancer. This load balancer has three pools (us, emea, apac), health checks, random traffic steering, and a session based cookie override for each pool. 
