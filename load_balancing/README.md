@@ -6,12 +6,12 @@ There are [custom rules](https://developers.cloudflare.com/load-balancing/additi
 
 ## Terraform Resources
 
-[Cloudflare Load Balancer](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer)
-[Cloudflare Load Balancer Pool](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_pool)
-[Cloudflare Load Balancer Pool Monitor](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_monitor)
-[Google Compute Instance](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance)
-[Google Compute Image Data Source](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_image)
-[Random ID](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id)
+* [Cloudflare Load Balancer](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer)
+* [Cloudflare Load Balancer Pool](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_pool)
+* [Cloudflare Load Balancer Pool Monitor](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_monitor)
+* [Google Compute Instance](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance)
+* [Google Compute Image Data Source](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_image)
+* [Random ID](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id)
 
 ## Pre-requisites
 
