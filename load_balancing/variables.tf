@@ -25,6 +25,11 @@ variable "cloudflare_account_id" {
   type        = string
 }
 
+variable "cloudflare_lbrecord" {
+  description = "The FQDN of the Load Balancer such as lb.example.com"
+  type        = string
+}
+
 variable "cloudflare_email" {
   description = "The Cloudflare user."
   type        = string
