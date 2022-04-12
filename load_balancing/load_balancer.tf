@@ -1,4 +1,4 @@
-resource "cloudflare_load_balancer" "terraform_managed_resource_6abf3bae6ed8e133351724690307de87" {
+resource "cloudflare_load_balancer" "global_lb" {
   enabled          = true
   name             = var.cloudflare_lbrecord
   default_pool_ids = [cloudflare_load_balancer_pool.us.id, cloudflare_load_balancer_pool.emea.id, cloudflare_load_balancer_pool.apac.id]
