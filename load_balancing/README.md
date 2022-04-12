@@ -1,4 +1,4 @@
-# Applying Multi-Region Load Balacning to a Cloudflare Zone via Terraofrm
+# Applying Multi-Region Load Balacning to a Cloudflare Zone via Terraform
 
 This walkthrough demonstrates a Cloudflare Load Balancer visitable at a hostname, such as `lb.example.com`, that has three pools in geographically distinct regions in Google Cloud (GCP). The load balancer is using Random [traffic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/). Each pool has a single instance running Contianer Optimized OS that has a [HTML container](https://hub.docker.com/r/tenaciousdlg/html-container) visitable. The HTML container echos the region that it is in. 
 
