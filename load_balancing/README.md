@@ -29,12 +29,22 @@ on darwin_arm64
 ├── monitor.tf
 ├── origins.tf
 ├── pools.tf
-├── terraform.tfstate
-├── terraform.tfstate.backup
 ├── terraform.tfvars
 └── variables.tf
 
 0 directories, 10 files
 ```
 
-* `load_balancer.tf` contains the config for the Cloudflare Load Balancer. This load balancer has three pools (us, emea, apac), health checks 
+* `load_balancer.tf` contains the config for the Cloudflare Load Balancer. This load balancer has three pools (us, emea, apac), health checks, random traffic steering, and a session based cookie override for each pool. 
+
+* `main.tf` contains the provider information for the Terraform objects.
+
+* `monitor.tf` contains a HTTP load balancer monitor that is added to each pool in `pools.tf`.
+
+* `origins.tf` contains the config for the three instances in GCP. Each instance is built in a geographically distinct region and runs a HTML container.
+
+* `pools.tf` contains the config for the three pools referenced in `load_balancer.tf`.
+
+* `terraform.tfvars` is the credentials/variables file for this deployment. I copy it from `../terraform.tfvars.example` and added a `cloudflare_lbrecord` variable in both the `.tfvars` file and `variables.tf` file for this deployment.
+
+* `variables.tf` is the decleration of variables file for this deployment. 
