@@ -24,7 +24,7 @@ on darwin_arm64
 
 Make sure `gcloud` is setup and authenticated to your project. Google has instructions on how to do so [here](https://cloud.google.com/sdk/docs/install-sdk).
 
-The `chrome_remote_desktop` variable is sourced from (this resource)[https://remotedesktop.google.com/headless]. You will want to click on Begin > Next > Authorize > then the Copy (two boxes) icon next to the string that starts with `DISPLAY`. When you paste it into your plan it should look like the following.
+The `chrome_remote_desktop` variable is sourced from [this resource](https://remotedesktop.google.com/headless). You will want to click on Begin > Next > Authorize > then the Copy (two boxes) icon next to the string that starts with `DISPLAY`. When you paste it into your plan it should look like the following.
 
 ```
 ❯ terraform plan --out=demo.plan
