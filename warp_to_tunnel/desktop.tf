@@ -46,6 +46,10 @@ resource "google_compute_instance" "desktop" {
     "cf-terraform" = "zt_desktop"
     "cf-email"     = var.cloudflare_email
   }
+
+  labels = {
+    "owner" = split("@", replace(var.cloudflare_email, ".", "_"))[0]
+  }
 }
 
 output "build_time" {
