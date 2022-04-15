@@ -55,3 +55,14 @@ var.pin
 
 ## Usage
 
+1. Copy the `terraform.tfvars.example` file from the cloudflare_terraform directory to this one as `terraform.tfvars`.
+
+2. Add your information but make sure the `machine_type` variable is `"e2-medium"`.
+
+3. Test your deployment by running `terraform plan`. You will be asked to provide three inputs for variables. PLease see ## Pre-requisites for where to get this information. 
+
+4. If everything looks correct run `terraform apply` and accept the prompts after review.
+
+5. When done run `terraform destroy` to remove the configuration. You can provide blank inputs for the variables at this point. 
+
+Each time you run this you will need to go to [the Chrome Remote Desktop](https://remotedesktop.google.com/headless) interface and get a new token for the `var.chrome_remote_desktop` variable. 
