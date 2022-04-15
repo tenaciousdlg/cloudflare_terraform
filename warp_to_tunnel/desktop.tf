@@ -43,7 +43,7 @@ resource "google_compute_instance" "desktop" {
   )
 
   metadata = {
-    "cf-terraform" = "zt_desktop"
+    "cf-terraform" = "warp_desktop"
     "cf-email"     = var.cloudflare_email
   }
 
