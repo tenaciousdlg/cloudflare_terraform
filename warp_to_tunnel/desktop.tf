@@ -49,6 +49,7 @@ resource "google_compute_instance" "desktop" {
 }
 
 output "build_time" {
+  description = "Information on build time for this demo."
   value = "Typically it takes ~8 minutes for the script to finish running to create the desktop. Once the desktop reboots you should see it in Chrome Remote Desktop."
 }
 
@@ -57,5 +58,5 @@ output "desktop_name" {
 }
 
 output "post_config" {
-  value = "Run 'warp-cli --accept-tos teams-enroll <team name>' on the remote server and the DISPLAY command when the desktop finishes"
+  value = "Run 'warp-cli --accept-tos teams-enroll <team name>' on the remote server to enroll WARP in your Account."
 }
