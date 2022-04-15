@@ -1,5 +1,5 @@
 resource "random_id" "namespace" {
-  prefix      = "desktop-"
+  prefix      = "ztdesktop-"
   byte_length = 2
 }
 
