@@ -34,21 +34,18 @@ resource "google_compute_instance" "desktop" {
     automatic_restart = false
   }
 
-  metadata_startup_script = data.template_file.desktop_config.rendered
+  metadata_startup_script = templatefile(
+    "${path.module}/scripts/desktop_script.sh", {
+      CRD          = var.chrome_remote_desktop,
+      DESKTOP_USER = var.user,
+      PIN          = var.pin
+    }
+  )
 
   metadata = {
     "cf-terraform" = "zt_desktop"
     "cf-email"     = var.cloudflare_email
   }
-}
-
-data "template_file" "desktop_config" {
-    template = file("${path.module}/scripts/desktop_script.sh")
-    vars = {
-        CRD          = var.chrome_remote_desktop
-        DESKTOP_USER = var.user
-        PIN          = var.pin
-    }
 }
 
 output "build_time" {
