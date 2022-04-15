@@ -26,6 +26,19 @@ function install_certs() {
     sudo update-ca-certificates
 }
 
+# https://stackoverflow.com/questions/1435000/programmatically-install-certificate-into-mozilla
+function firefox_cert() {
+    echo '{
+        "policies": {
+            "Certificates": {
+                "Install": [
+                    "/usr/local/share/ca-certificates/Cloudflare_CA.crt"
+                ]
+            }
+        }
+    }' >> /usr/lib/firefox/distribution/policies.json
+}
+
 function warp() {
     sudo curl https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
     sudo echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ focal main' | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
@@ -38,11 +51,11 @@ function reboot() {
     sh -c sudo reboot
 }
 
-
 # main program
 base_os
 install_desktop
 display
 install_certs
+firefox_cert
 warp
 reboot
