@@ -54,3 +54,14 @@ variable "chrome_remote_desktop" {
   description = "The variable starts with DISPLAY from Chrome Remote Desktop. Please paste it here."
   type = string
 }
+
+variable "instances" {
+  default = {
+      "emea" = {
+          "zone": "europe-west1-c"
+      },
+      "apac" = {
+          "zone": "asia-northeast3-a"
+      }
+  }
+}
