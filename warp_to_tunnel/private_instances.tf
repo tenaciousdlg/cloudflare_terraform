@@ -18,7 +18,7 @@ resource "google_compute_instance" "origins" {
   name         = "${each.key}-${random_id.origin_name.hex}"
   machine_type = "f1-micro"
   zone         = each.value.zone
-  tags         = []
+  tags         = ["cf-block-all"]
 
   boot_disk {
     initialize_params {
@@ -55,5 +55,24 @@ resource "google_compute_instance" "origins" {
 
   labels = {
     "owner" = split("@", replace(var.cloudflare_email, ".", "_"))[0]
+  }
+}
+
+resource "null_resource" "destroy" {
+  triggers = {
+    "private_ip" = google_compute_instance.origins[each.key].network_interface.0.network_ip
+  }
+
+  depends_on = [
+    google_compute_instance.origins
+  ]
+  for_each = var.instances
+  provisioner "local-exec" {
+    when = destroy
+    command = "/bin/bash -x ${path.module}/scripts/private_destroy.sh"
+
+    environment = {
+      private_ip = self.triggers.private_ip
+     }
   }
 }
