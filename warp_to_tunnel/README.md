@@ -97,7 +97,7 @@ A Cloudflare Zero Trust account. Instructions on how to set one up can be found 
 
 ## Usage
 
-0. This repository should be copied to the workstation that conpleted the [Workstation Pre-requisites](/cloudflare_terraform/tree/main/warp_to_tunnel#workstation-pre-requisites)
+0. This repository should be copied to the workstation that conpleted the [Workstation Pre-requisites](warp_to_tunnel#workstation-pre-requisites)
 
 1. Copy the `terraform.tfvars.example` file from the `cloudflare_terraform` directory to this one as `terraform.tfvars`.
 
