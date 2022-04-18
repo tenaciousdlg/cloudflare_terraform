@@ -4,22 +4,7 @@ variable "gcp_project_id" {
   type        = string
 }
 
-variable "machine_type" {
-  description = "GCP VM instance machine type."
-  type        = string
-}
-
 # Cloudflare Variables
-variable "cloudflare_zone" {
-  description = "The Cloudflare Zone to use."
-  type        = string
-}
-
-variable "cloudflare_zone_id" {
-  description = "The Cloudflare UUID for the Zone to use."
-  type        = string
-}
-
 variable "cloudflare_account_id" {
   description = "The Cloudflare UUID for the Account the Zone lives in."
   type        = string
@@ -41,12 +26,12 @@ variable "zone" {
 }
 # Chrome Remote Desktop Variables
 variable "pin" {
-  description = "String of digits used to login to the Chrome Remote Desktop. Must be 6 digits; e.g. 123456"
+  description = "Please type 6 digits to use as a login pin with Chrome Remote Desktop.\ne.g. 123456"
   type = string
 }
 
 variable "user" {
-  description = "Your GCP user. Typically the same as your workstation user. If you're not sure run 'env | grep '^USER' and use that value."
+  description = "Your GCP user. Typically the same as your workstation user.\nIf you're not sure run 'env | grep '^USER' and use that value."
   type = string
 }
 
