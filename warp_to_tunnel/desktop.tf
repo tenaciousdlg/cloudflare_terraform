@@ -12,7 +12,7 @@ data "google_compute_image" "os" {
 
 resource "google_compute_instance" "desktop" {
   name         = random_id.namespace.hex
-  machine_type = var.machine_type
+  machine_type = "e2-medium"
   zone         = var.zone
   tags         = ["desktop", "ssh"]
 
