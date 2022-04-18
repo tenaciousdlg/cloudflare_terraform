@@ -242,7 +242,7 @@ Registration ID: [redacted]
 ...
 ```
 
-15. You are now ready to connect to the private instances and test WARP. Firefox can be used to view NGINX running on port 80 and Grafana running on port 3000. 
+16. You are now ready to connect to the private instances and test WARP. Firefox can be used to view NGINX running on port 80 and Grafana running on port 3000. 
 
 ```
 ❯ terraform state show 'google_compute_instance.origins["emea"]' | grep 'network_ip'
