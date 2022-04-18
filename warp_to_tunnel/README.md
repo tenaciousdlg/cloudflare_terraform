@@ -1,6 +1,6 @@
 # [Warp to Tunnel](https://developers.cloudflare.com/cloudflare-one/tutorials/warp-to-tunnel/) running on GCP
 
-This Terraform demo demonstrates how to spin up a [remote desktop](https://remotedesktop.google.com/access/) in Google Cloud (GCP) with [WARP](https://developers.cloudflare.com/warp-client/get-started/linux/) installed. 
+This Terraform demo can be used to spin up a [remote desktop](https://remotedesktop.google.com/access/) in Google Cloud (GCP) with [WARP](https://developers.cloudflare.com/warp-client/get-started/linux/) installed. 
 
 Seperate instances are created in geographically different zones in GCP that live on different 10.0.0.0/8 IP space from the remote desktop. The remote instances have their 10.x.x.x/32 IP range proxied via a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/) to the Cloudflare Account that WARP running on the desktop is affiliated with.
 
