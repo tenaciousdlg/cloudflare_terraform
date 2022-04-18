@@ -2,7 +2,7 @@
 
 This Terraform demo can be used to spin up a [remote desktop](https://remotedesktop.google.com/access/) in Google Cloud (GCP) with [WARP](https://developers.cloudflare.com/warp-client/get-started/linux/) installed. 
 
-Seperate instances are created in geographically different zones in GCP that live on different 10.0.0.0/8 IP space from the remote desktop. The remote instances have their 10.x.x.x/32 IP range proxied via a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/) to the Cloudflare Account that WARP running on the desktop is affiliated with.
+Separate instances are created in geographically different zones in GCP that live on different 10.0.0.0/8 IP space from the remote desktop. The remote instances have their 10.x.x.x/32 IP range proxied via a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/) to the Cloudflare Account that WARP running on the desktop is affiliated with.
 
 The remote desktop is able to reach applications on the 10.x.x.x/32 range on the instances via the WARP client to the remote Tunnels. 
 
@@ -16,9 +16,9 @@ The remote desktop is able to reach applications on the 10.x.x.x/32 range on the
 
 * [Null Resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource)
 
-* [Rnadom ID](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id)
+* [Random ID](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id)
 
-## Workstation Pre-requisites
+## Workstation Prerequisites
 
 On the device running this Terraform demo the following needs to be installed.
 
@@ -39,7 +39,7 @@ The gcloud cli on the workstation needs to have access to Google Compute (to cre
 
 ### Terraform
 
-Insturctions on how to download Terrafrom can be found [here](https://www.terraform.io/downloads).
+Instructions on how to download Terraform can be found [here](https://www.terraform.io/downloads).
 
 This demo was tested using the 1.x version of Terraform.
 
@@ -52,13 +52,13 @@ on darwin_arm64
 + provider registry.terraform.io/hashicorp/random v3.1.2
 ```
 
-Usage information can be found below.
+Usage information can be found below. (The providers seen above are installed during the Usage section below)
 
-## Account Pre-requisities
+## Account Prerequisites
 
 A Cloudflare Zero Trust account. Instructions on how to set one up can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/set-up-warp/).
 
-## Heirarchy 
+## Hierarchy 
 
 ```
 ❯ pwd; tree .
@@ -83,7 +83,7 @@ A Cloudflare Zero Trust account. Instructions on how to set one up can be found 
 
 * `desktop.tf` - Configuration file for the remote desktop. This file calls the desktop script to configure the instance.
 
-* `main.tf` - Contains the provider information for the Terraform objects. When `terraform init` is ran it'll source the information here.
+* `main.tf` - Contains the provider information for the Terraform objects. When `terraform init` is ran it'll source the information here. This is how the providers and Terraform get installed into the directory. 
 
 * `private_instances.tf` - Configuration file for the remote instances. The cloudflared service is installed and WARP routing enabled for the private 10.x.x.x IPs. NGINX is installed at port 80 and Grafana at port 3000. This file calls the private instances script to configure the instances. 
 
@@ -97,7 +97,7 @@ A Cloudflare Zero Trust account. Instructions on how to set one up can be found 
 
 ## Usage
 
-0. This repository should be copied to the workstation that conpleted the [Workstation Pre-requisites](README.md#workstation-pre-requisites)
+0. This repository should be copied to the workstation that completed the [Workstation Prerequisites](README.md#workstation-prerequisites)
 
 1. Copy the `terraform.tfvars.example` file from the `cloudflare_terraform` directory to this one as `terraform.tfvars`.
 
@@ -186,7 +186,7 @@ random_id.namespace: Creation complete after 0s [id=Vng]
 ...
 ```
 
-6. Terraform will then create three instances in GCP. One for the desktop and two for the remote private resources. Two tunnels are created and configured on the remote private instances. WARP is installed on the desktop along with the Cloudflare CA Certitifcate being installed to Firefox. Users will need to finish conifuring WARP when logging into the desktop.
+6. Terraform will then create three instances in GCP. One for the desktop and two for the remote private resources. Two tunnels are created and configured on the remote private instances. WARP is installed on the desktop along with the Cloudflare CA Certificate being installed to Firefox. Users will need to finish configuring WARP when logging into the desktop.
 
 Navigate to [Chrome Remote Desktop](https://remotedesktop.google.com/access/) and locate the zt-desktop insance. Terraform will provide the desktop name in its output after `terraform apply`. Use the pin set earlier to complete the login.
 
