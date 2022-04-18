@@ -79,21 +79,21 @@ A Cloudflare Zero Trust account. Instructions on how to set one up can be found 
 1 directory, 10 files
 ```
 
-* README.md
+* `README.md` - This file.
 
-* desktop.tf
+* `desktop.tf` - Configuration file for the remote desktop. This file calls the desktop script to configure the instance.
 
-* main.tf
+* `main.tf` - Contains the provider information for the Terraform objects. When `terraform init` is ran it'll source the information here.
 
-* private_instances.tf
+* `private_instances.tf` - Configuration file for the remote instances. The cloudflared service is installed and WARP routing enabled for the private 10.x.x.x IPs. NGINX is installed at port 80 and Grafana at port 3000. This file calls the private instances script to configure the instances. 
 
-* scripts/*
+* `scripts/*` - Collection of bash scripts used for instance configuration and to remove WARP routing during `terraform destroy`. 
 
-* terraform.tfvars
+* `terraform.tfvars` - Variables file for configuring Google and Cloudflare. 
 
-* tunnels.tf
+* `tunnels.tf` - Configuration file for Cloudflare Tunnels (cloudflared). 
 
-* variables.tf
+* `variables.tf` - Variables for this demo are located in this file. 
 
 ## Usage
 
