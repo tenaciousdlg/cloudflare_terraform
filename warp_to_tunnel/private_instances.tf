@@ -50,7 +50,6 @@ resource "google_compute_instance" "origins" {
   metadata = {
       cf-terraform = "warp_to_tunnel"
       cf-email = var.cloudflare_email
-      cf-zone = var.cloudflare_zone
   } 
 
   labels = {
