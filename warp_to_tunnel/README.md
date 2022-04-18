@@ -220,7 +220,15 @@ dlg@zt-desktop-5678:~$ warp-cli get-organization
 <teamname>
 ```
 
-14. Connect the WARP client by running `warp-cli connect`.
+14. In a separate window navigate to your [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com), login, and then update your [Network traffic](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) to Include instead of Exclude. 
+
+To get to Network traffic from the Cloudflare Zero Trust dashboard click on Settings > Network > Split Tunnels > Select Include IPs and domains > This will bring up a pop-up warning you this is a breaking change (If you have existing WARP devices connected to your account I recommend spinning up a new Zero Trust account for this testing) > Navigate through the pop-up > on the Split Tunnels menu select IP Address and add `10.0.0.0/8` > click **Save destination** > repeat this step for additional networks and domains WARP needs to proxy.
+
+This step is needed because by default WARP watches all network traffic except for what you exclude from it. This means the UDP traffic that Chrome Remote Desktop uses for its communication will be caught up and this will break your connection to the desktop. 
+
+Using Include rules allows you to specify what networks WARP should monitor. In this case we want to use `10.0.0.0/8` to catch the private instances created in step 5/6. As mentioned earlier this is a breaking change. If you are unsure of how to proceed consult your Cloudflare support team. 
+
+15. Navigate back to the remote desktop and connect the WARP client by running `warp-cli connect`.
 
 ```
 dlg@zt-desktop-5678:~$ warp-cli connect
