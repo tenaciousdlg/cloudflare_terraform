@@ -6,6 +6,15 @@ Separate instances are created in geographically different zones in GCP that liv
 
 The remote desktop is able to reach applications on the 10.x.x.x/32 range on the instances via the WARP client to the remote Tunnels. 
 
+## To Do
+* Add Gateway policies via Terraform Resources <== In Progress
+
+* Look into configuring Split Tunnel (network rules) via API/Terraform
+
+* Add Access Internal Application policies for private resources (Grafana/NGINX)
+
+* Add bookmarks to Firefox for private resources to ease demoing
+
 ## Terraform Resources
 
 * [Cloudflare Argo Tunnel](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/argo_tunnel)
