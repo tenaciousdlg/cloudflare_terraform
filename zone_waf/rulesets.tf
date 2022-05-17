@@ -19,7 +19,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   }
 
 # Example of setting a ruleset to execute. In this case the Cloudflare Managed Ruleset
-# An override is used to alter the behavior of the rules tagged with wordpress to js_challenge as their action
+# An override is used to change the default action of the ruleset's rules to log
+# An additional override is used to alter the behavior of the rules tagged with wordpress to js_challenge as their action
   rules {
     action = "execute"
     action_parameters {
