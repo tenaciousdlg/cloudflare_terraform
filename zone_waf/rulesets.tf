@@ -26,6 +26,8 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       id      = "${data.external.cf_managed_ruleset.result.id}"
       version = "latest"
       overrides {
+        action = "log"
+        enabled = true
         categories {
           category = "wordpress"
           action   = "js_challenge"
@@ -34,7 +36,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       }
     }
     expression  = "true"
-    description = "Execute the Cloudflare Managed Ruleset on the zone-level phase entry point ruleset"
+    description = "Execute the Cloudflare Managed Ruleset on the zone-level phase entry point ruleset with a Log action and override the wordpress tagged rules to js challenge"
     enabled     = true
   }
 
