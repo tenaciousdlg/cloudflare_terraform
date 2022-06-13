@@ -9,6 +9,10 @@ variable "machine_type" {
   type        = string
 }
 
+variable "zone" {
+  description = "Zone for GCP instance"
+  type        = string
+}
 # Cloudflare Variables
 variable "cloudflare_zone" {
   description = "The Cloudflare Zone to use."
