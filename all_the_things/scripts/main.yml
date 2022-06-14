@@ -2,10 +2,10 @@
 - hosts: all
   become: true
   vars:
-    container_count: 4
-    default_container_name: echo
-    default_container_image: busybox
-    default_container_command: echo 'hello'
+    #container_count: 4
+    #default_container_name: echo
+    #default_container_image: nginx
+    #default_container_command: echo 'hello'
 
   tasks:
     - name: Install aptitude
@@ -49,13 +49,20 @@
 
     - name: Pull default Docker image
       community.docker.docker_image:
-        name: "{{ default_container_image }}"
+        name: "nginx:stable-alpine"
         source: pull
 
     - name: Create default containers
       community.docker.docker_container:
-        name: "{{ default_container_name }}{{ item }}"
-        image: "{{ default_container_image }}"
-        command: "{{ default_container_command }}"
-        state: present
-      with_sequence: count={{ container_count }}
+        name: "ingress"
+        image: "nginx:stable-alpine"
+        state: "started"
+        restart_policy: "unless-stopped"
+        ports: 
+          - "80:80"
+
+      #  name: "{{ default_container_name }}{{ item }}"
+      #  image: "{{ default_container_image }}"
+      #  command: "{{ default_container_command }}"
+      #  state: present
+      #with_sequence: count={{ container_count }}
