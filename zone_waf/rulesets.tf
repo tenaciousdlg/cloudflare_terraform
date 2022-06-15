@@ -28,11 +28,11 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       version = "latest"
       overrides {
         action = "log"
-        enabled = true
+        status = "enabled"
         categories {
           category = "wordpress"
           action   = "js_challenge"
-          enabled  = true
+          status   = "disabled"
         }
       }
     }
@@ -50,15 +50,15 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       overrides {
         categories {
           category = "paranoia-level-2"
-          enabled  = false
+          status   = "disabled"
         }
         categories {
           category = "paranoia-level-3"
-          enabled  = false
+          status   = "disabled"
         }
         categories {
           category = "paranoia-level-4"
-          enabled  = false
+          status   = "disabled"
         }
         rules {
           id              = "${data.external.cf_owasp_anomaly_score.result.id}"
