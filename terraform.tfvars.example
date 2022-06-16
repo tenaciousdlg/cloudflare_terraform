@@ -1,8 +1,0 @@
-cloudflare_zone = "YOUR APEX ZONE (e.g. example.com)"
-cloudflare_zone_id = "YOUR CLOUDFLARE ZONE ID"
-cloudflare_account_id = "YOUR CLOUDFLARE ACCOUNT ID"
-cloudflare_email = "YOUR CLOUDFLARE ACCOUNT EMAIL"
-cloudflare_token = "YOUR CLOUDFLARE API TOKEN"
-gcp_project_id = "YOUR GCP PROJECT ID"
-zone = "YOUR GCP REGION TO CREATE PRIMARY INSTANCE ex: us-east1-b"
-machine_type = "n1-standard-1"
