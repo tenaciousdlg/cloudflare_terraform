@@ -4,8 +4,9 @@
   vars:
     #container_count: 4
     #default_container_name: echo
-    #default_container_image: nginx
-    #default_container_command: echo 'hello'
+  
+  vars_files:
+    - ../tf_ansible_vars_file.yml
 
   tasks:
     - name: Install aptitude
@@ -24,6 +25,7 @@
           - python3-pip
           - virtualenv
           - python3-setuptools
+          - vim
         state: latest
         update_cache: true
 
@@ -47,22 +49,128 @@
       pip:
         name: docker
 
-    - name: Pull default Docker image
+    - name: Pull nginx image
       community.docker.docker_image:
         name: "nginx:stable-alpine"
         source: pull
 
-    - name: Create default containers
+    - name: Create nginx container
       community.docker.docker_container:
-        name: "ingress"
+        name: "nginx"
         image: "nginx:stable-alpine"
         state: "started"
         restart_policy: "unless-stopped"
         ports: 
           - "80:80"
+    
+    - name: Pull httpbin image
+      community.docker.docker_image:
+        name: "kennethreitz/httpbin"
+        source: pull
 
-      #  name: "{{ default_container_name }}{{ item }}"
-      #  image: "{{ default_container_image }}"
-      #  command: "{{ default_container_command }}"
-      #  state: present
-      #with_sequence: count={{ container_count }}
+    - name: Create httpbin docker container
+      community.docker.docker_container:
+        name: "httpbin"
+        image: "kennethreitz/httpbin"
+        state: "started"
+        restart_policy: "unless-stopped"
+        ports:
+          - "8080:80"
+
+    - name: Pull echo image
+      community.docker.docker_image:
+        name: "mendhak/http-https-echo"
+        source: pull
+
+    - name: Create echo docker container
+      community.docker.docker_container:
+        name: "echo"
+        image: "mendhak/http-https-echo"
+        state: "started"
+        restart_policy: "always"
+        ports:
+          - "8081:443"
+
+    - name: Pull api image
+      community.docker.docker_image:
+        name: "mockoon/cli"
+        source: pull
+    
+    - name: Create api docker container
+      community.docker.docker_container:
+        name: "api"
+        image: "mockoon/cli"
+        state: "started"
+        restart_policy: "unless-stopped"
+        ports:
+          - "3000:3000"
+        command: "-d https://raw.githubusercontent.com/mockoon/mock-samples/main/mock-apis/data/spotifycom.json -p 3000"
+
+    - name: Add cloudflared GPG apt Key
+      apt_key:
+        url: https://pkg.cloudflare.com/cloudflare-main.gpg
+        state: present
+
+    - name: Add cloudflared Repository
+      apt_repository:
+        repo: deb https://pkg.cloudflare.com/ focal main 
+        state: present
+
+    - name: Update apt and install cloudflared
+      apt:
+        name: cloudflared
+        state: latest
+        update_cache: true
+
+    - name: Create cloudflared service directory 
+      shell: mkdir -p /etc/cloudflared/
+    
+    - name: Creating Ingress Rules file for cloudflared
+      copy:
+        dest: "/etc/cloudflared/config.yml"
+        content: |
+          tunnel: "{{ tunnel_id }}"
+          credentials-file: /etc/cloudflared/cert.json
+          logfile: /var/log/cloudflared.log
+          loglevel: info    
+
+          ingress:
+            - hostname: "{{ zone }}"
+              service: https://localhost:8081
+              originRequest:
+                originServerName: "{{ zone }}"
+                noTLSVerify: true
+            - hostname: "api.{{ zone }}"
+              service: http://localhost:3000
+            - hostname: "httpbin.{{ zone }}"
+              service: http://localhost:8080
+            - hostname: "nginx.{{ zone }}"
+              service: http://localhost:80
+            - hostname: "ssh.txflare.cf"
+              service: ssh://localhost:22
+            - hostname: "*"
+              path: "^/_healthcheck$"
+              service: http_status:200
+            - hostname: "*"
+              service: hello-world
+
+    - name: Creating cert.json file for cloudflared
+      copy:
+        dest: "/etc/cloudflared/cert.json"
+        content: |
+          {
+            "AccountTag"   : "{{ account | quote }}",
+            "TunnelID"     : "{{ tunnel_id | quote }}",
+            "TunnelName"   : "{{ tunnel_name | quote }}",
+            "TunnelSecret" : "{{ secret | quote }}"
+          }
+
+    - name: Installing cloudflared as a service
+      shell: cloudflared service install
+    
+    - name: Start cloudflared service
+      systemd:
+        name: cloudflared
+        state: started
+        enabled: true
+        masked: no

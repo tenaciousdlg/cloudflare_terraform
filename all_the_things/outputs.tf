@@ -3,5 +3,9 @@ output "public_ip" {
 }
 
 output "instance_name" {
-    value = random_id.namespace.hex
+  value = random_id.namespace.hex
+}
+
+output "tunnel_name" {
+  value = random_id.namespace.hex
 }

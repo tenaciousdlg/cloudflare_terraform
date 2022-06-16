@@ -12,7 +12,7 @@ resource "google_compute_instance" "origin" {
   name         = random_id.namespace.hex
   machine_type = var.machine_type
   zone         = var.zone
-  tags         = ["http-server", "ssh", "https-server"]
+  tags         = []
 
   boot_disk {
     initialize_params {
@@ -54,4 +54,7 @@ resource "google_compute_instance" "origin" {
       cf-zone      = var.cloudflare_zone
   } 
 
+  depends_on = [
+    local_file.tf_ansible_vars_file
+  ]
 }
