@@ -37,9 +37,8 @@ resource "google_compute_instance" "origin" {
       "sudo apt update", "sudo apt install python3 -y",  "echo Done!"
     ]
     connection {
-      #host = google_compute_instance.origin.network_interface[0].access_config[0].nat_ip
       host = self.network_interface.0.access_config.0.nat_ip
-      user = "dlg"
+      user = "user"
       type = "ssh"
     }
   }
