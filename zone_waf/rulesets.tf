@@ -18,6 +18,19 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
     enabled     = true
   }
 
+  rules {
+    action = "skip"
+
+    action_parameters {
+      rules = {
+        "efb7b8c949ac4650a09736fc376e9aee" = "9c8dda9708cc4452ac76e7be7b58420b"
+      }
+    }
+    expression  = "(http.request.uri.path matches \"^/admin/.*\" and http.request.method eq \"POST\")"
+    description = "Skip XSS HTML Injection"
+    enabled     = true
+  }
+
 # Example of setting a ruleset to execute. In this case the Cloudflare Managed Ruleset
 # An override is used to change the default action of the ruleset's rules to log
 # An additional override is used to alter the behavior of the rules tagged with wordpress to js_challenge as their action
@@ -68,8 +81,19 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       }
     }
     expression   = "true"
-    description  = "Execute the Cloudflare OWASP Ruleset with PL1 (PL1 is the default mode when OWASP is deployed)"  
+    description  = "Execute the Cloudflare OWASP ruleset with PL1 (PL1 is the default mode when OWASP is deployed)"  
     enabled      = true
+  }
+
+  rules {
+    action = "execute"
+    action_parameters {
+      id      =  "c2e184081120413c86c3ab7e14069605"
+      version = "latest"
+    }
+    expression  = "true"
+    description = "Execute the Cloudflare Leaked Credentials Check ruleset"
+    enabled     = true
   }
 }
 
