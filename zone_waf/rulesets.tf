@@ -45,7 +45,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
         categories {
           category = "wordpress"
           action   = "js_challenge"
-          status   = "disabled"
+          status   = "enabled"
         }
       }
     }
