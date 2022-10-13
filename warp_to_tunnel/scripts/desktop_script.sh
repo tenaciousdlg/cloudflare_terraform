@@ -3,7 +3,7 @@ set -e
 
 function base_os() {
     sudo apt update --assume-yes
-    sudo apt install --assume-yes wget resolvconf
+    sudo apt install --assume-yes wget resolvconf net-tools
     echo 'nameserver 1.1.1.1' | sudo tee -a /etc/resolvconf/resolv.conf.d/head
 }
 

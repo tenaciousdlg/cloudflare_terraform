@@ -16,7 +16,7 @@ data "local_sensitive_file" "cert" {
 resource "google_compute_instance" "origins" {
   for_each = var.instances
   name         = "${each.key}-${random_id.origin_name.hex}"
-  machine_type = "f1-micro"
+  machine_type = "g1-small"
   zone         = each.value.zone
   tags         = ["cf-block-all"]
 

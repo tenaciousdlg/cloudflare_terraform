@@ -38,7 +38,7 @@ resource "google_compute_instance" "origin" {
     ]
     connection {
       host = self.network_interface.0.access_config.0.nat_ip
-      user = "user"
+      user = "dlg"
       type = "ssh"
     }
   }

@@ -5,7 +5,7 @@ set -e
 # Updates the OS, installs packages, tells instance to use Cloudflare for DNS
 function base_os() {
     sudo apt update --assume-yes
-    sudo apt install --assume-yes wget resolvconf vim
+    sudo apt install --assume-yes wget resolvconf vim net-tools
     echo 'nameserver 1.1.1.1' | sudo tee -a /etc/resolvconf/resolv.conf.d/head
 }
 # Installs the repoistory then package for cloudflared
