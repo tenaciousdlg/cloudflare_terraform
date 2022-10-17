@@ -29,9 +29,9 @@ The `zone_waf` directory focuses on the new Zone level WAF and its configuration
 
 ## Pre-requisites 
 
-An important thing to know at the beginning of this tutorial is that if you're going to use Terraform to manage the new WAF you must only use Terraform. If you havve already created a ruleset (toggled on the new WAF) in the dashboard you must delete that ruleset first. Subsequent changes can then be made via Terraform. The deletion of these dashboard made rulesets needs to be done via the Cloudflare API with the following two calls.
+An important thing to know at the beginning of this tutorial is that if you're going to use Terraform to manage the new WAF you must only use Terraform. If you have already created a ruleset (toggled on the new WAF) in the dashboard you must delete that ruleset first. Subsequent changes can then be made via Terraform. The deletion of these dashboard made rulesets needs to be done via the Cloudflare API with the following two calls for the Zone WAF.
 
-To use this example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
+To use the following example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
 
 1. First list any created rulesets.
 
@@ -101,13 +101,15 @@ Example:
 
 4. Run `terraform plan` to see what the configuration will do.
 
-For the Account WAF
+_For the Account WAF_
 
+- A Host blocking rule is created as a filter then deployed to all Enterprise zones on the account. 
 
-For the Zone WAF
-It will setup an exclusion for Cloudflare Managed Ruleset at the zone level
-It will execute the Cloudflare Managed Ruleset at the zone level
-It will execute the OWASP Cloudflare Ruleset at the zone level with Paranoia Level 1 and Anomaly Score >60
+_For the Zone WAF_
+
+- An exclusion for Cloudflare Managed Ruleset at the zone level is created
+- Execute the Cloudflare Managed Ruleset at the zone level
+- Execute the OWASP Cloudflare Ruleset at the zone level with Paranoia Level 1 and Anomaly Score >60
 
 5. Run `terraform apply` to enable these changes. 
 
