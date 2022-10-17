@@ -60,7 +60,7 @@ curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
 
 3. The results from step 2 can then be fed into the DELETE call to remove the rulesets ahead of creating them in Terraform
 
-* WARNING: THIS WILL DELETE ANY EXISTING WAF RULESETS IN YOUR CLOUDFLARE ZONE!!! *
+*WARNING: THIS WILL DELETE ANY EXISTING WAF RULESETS IN YOUR CLOUDFLARE ZONE!!!*
 
 ```
 for id in $(curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
