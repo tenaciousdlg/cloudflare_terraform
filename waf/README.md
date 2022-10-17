@@ -14,7 +14,7 @@ The `zone_waf` directory focuses on the new Zone level WAF and its configuration
 │   ├── rulesets.tf  <== main configuration file, rules are created and implemented here
 │   ├── terraform.tfvars <== source of input variables for Terraform
 │   └── variables.tf  <== variables used in this Terraform config
-├── terraform.tfvars.example  <== Example hard-coded input variables for the Terraform repositories 
+├── terraform.tfvars.example  <== example hard-coded input variables for the Terraform repositories 
 └── zone_waf
     ├── README.md
     ├── main.tf  <== contains provider information
@@ -32,14 +32,6 @@ The `zone_waf` directory focuses on the new Zone level WAF and its configuration
 An important thing to know at the beginning of this tutorial is that if you're going to use Terraform to manage the new WAF you must only use Terraform. If you havve already created a ruleset (toggled on the new WAF) in the dashboard you must delete that ruleset first. Subsequent changes can then be made via Terraform. The deletion of these dashboard made rulesets needs to be done via the Cloudflare API with the following two calls.
 
 To use this example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
-
-The 1.x version of Terraform is used with this tutorial. 
-
-```
-❯ terraform --version
-Terraform v1.3.2
-on darwin_arm64
-```
 
 1. First list any created rulesets.
 
@@ -81,6 +73,14 @@ for id in $(curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/ru
 ```
 
 ## Using this Repository (after doing the above clean up)
+
+The 1.x version of Terraform is used with this tutorial. 
+
+```
+❯ terraform --version
+Terraform v1.3.2
+on darwin_arm64
+```
 
 > Note: Hardcoded variables in plaintext are used as part of this example. In production a secrets manager should be used. 
 
