@@ -104,7 +104,7 @@ Example:
 _For the Account WAF_
 
 - A blank user agent for `/robots.txt` blocking rule is created as a filter then deployed to all Enterprise zones on the account
-- The Exposed Credentials Managed ruleset is deployed to any Hostnames containing `cloudflarerocks.net`
+- The Exposed Credentials Managed ruleset is deployed to any Hostnames containing `cloudflarerocks.net` on all Enterprise zones on the account
 
 _For the Zone WAF_
 
