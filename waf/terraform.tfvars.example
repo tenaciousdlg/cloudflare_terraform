@@ -1,0 +1,5 @@
+cloudflare_zone       = "cloudflarerocks.com"
+cloudflare_zone_id    = "xxxxxxxx"
+cloudflare_account_id = "xxxxxxxx"
+cloudflare_email      = "user@example.com"
+cloudflare_token      = "xxxxxxxx"

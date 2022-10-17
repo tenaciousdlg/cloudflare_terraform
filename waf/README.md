@@ -27,23 +27,21 @@ The `zone_waf` directory focuses on the new Zone level WAF and its configuration
 
 ## Pre-requisites 
 
-An important thing to know at the beginning of this is that if you're going to use Terraform to manage the new WAF, you must only use Terraform. If you've already created a ruleset (toggled on the new WAF) in the dashboard, you must delete that ruleset first so that it can then be created with Terraform. That needs to be done via the API with two calls.
+An important thing to know at the beginning of this tutorial is that if you're going to use Terraform to manage the new WAF you must only use Terraform. If you havve already created a ruleset (toggled on the new WAF) in the dashboard you must delete that ruleset first. Subsequent changes can then be made via Terraform. The deletion of these dashboard made rulesets needs to be done via the Cloudflare API with the following two calls.
 
 To use this example you must have the [jq](https://stedolan.github.io/jq/) utility installed. 
 
-I am also using the 1.x version of Terraform. 
+The 1.x version of Terraform is used with this tutorial. 
 
 ```
 ❯ terraform --version
-Terraform v1.1.7
+Terraform v1.3.2
 on darwin_arm64
-+ provider registry.terraform.io/cloudflare/cloudflare v3.11.0
-+ provider registry.terraform.io/hashicorp/external v2.2.2
 ```
 
-1. First list any created (aka non-managed) rulesets.
+1. First list any created rulesets.
 
-> I have exported variables in the below call. 
+> Variables for user credetials are exported first then the API call is made.
 
 ```
 zone_id=XXXXXXXXXX
@@ -68,7 +66,7 @@ curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
 
 3. The results from step 2 can then be fed into the DELETE call to remove the rulesets ahead of creating them in Terraform
 
-* WARNING: THIS WILL DELETE ANY EXISTING RULESETS IN YOUR CLOUDFLARE ZONE!!!"
+* WARNING: THIS WILL DELETE ANY EXISTING WAF RULESETS IN YOUR CLOUDFLARE ZONE!!!"
 
 ```
 for id in $(curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/rulesets" \
@@ -82,26 +80,36 @@ for id in $(curl -sX GET "https://api.cloudflare.com/client/v4/zones/$zone_id/ru
 
 ## Using this Repository (after doing the above clean up)
 
-1. Copy ../terraform.tfvars.example to the current directory
+> Note: Hardcoded variables in plaintext are used as part of this example. In production a secrets manager should be used. 
 
+1. Copy `terraform.tfvars.example` to the either the account or zone directory (depending on use case) as `terraform.tfvars`.
+
+Example: 
 ```
 > pwd
-~/cloudflare_terraform/rulesets
+~/cloudflare_terraform/waf
 
-> 
-cp -via ~/cloudflare_terraform/terraform.tfvars.example rulesets/terraform.tfvars 
+❯ cp -via ./terraform.tfvars.example zone_waf/terraform.tfvars
+./terraform.tfvars.example -> zone_waf/terraform.tfvars
 ```
 
-2. Populate `terraform.tfvars` with values applicable to you.
+2. Populate `terraform.tfvars` with your Cloudflare credentials.
 
 3. Run `terraform init` to initialize Terraform in the current directory.  
 
-4. Run a `terraform plan` to see what the configuration will do
+4. Run `terraform plan` to see what the configuration will do.
 
+For the Account WAF
+
+
+For the Zone WAF
 It will setup an exclusion for Cloudflare Managed Ruleset at the zone level
 It will execute the Cloudflare Managed Ruleset at the zone level
 It will execute the OWASP Cloudflare Ruleset at the zone level with Paranoia Level 1 and Anomaly Score >60
 
-5. Run `terraform apply`
+5. Run `terraform apply` to enable these changes. 
 
-6. Make changes as needed and re-run steps 3 and 4. If you need to remove the configration 
+6. Make changes as needed and re-run steps 3 and 4. If you need to update the configration 
+
+## Cleaning Up
+If you wish to remove the Terraform applied configurations run `terraform destroy`. Exercise caution when doing so as this will delete any existing configs within scope. 
