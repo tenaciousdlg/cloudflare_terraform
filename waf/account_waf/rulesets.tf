@@ -1,32 +1,32 @@
-resource "cloudflare_ruleset" "acct_ip_geo_ruleset" {
+resource "cloudflare_ruleset" "acct_crawler_ruleset" {
     account_id  = var.cloudflare_account_id
-    name        = "dlg test ip geo block"
-    description = "dlg test ip geo block countires for security"
+    name        = "empty crawlers on robots.txt"
+    description = "blocks requests to robots.txt URI if UA is blank"
     kind        = "custom"
     phase       = "http_request_firewall_custom"
 
     rules {
         action     = "block"
-        expression = "(ip.geoip.country eq \"RU\" and ip.geoip.country in {\"UA\" \"CN\"})" 
+        expression = "(http.user_agent eq \"\" and http.request.uri contains \"/robots.txt\")" 
         enabled    = true
     }
 }
 
-resource "cloudflare_ruleset" "acct_ip_geo_entrypoint" {
+resource "cloudflare_ruleset" "acct_crawler_entrypoint" {
     account_id  = var.cloudflare_account_id
-    name        = "Account level entry point for the acct_ip_geo_ruleset"
+    name        = "Account level entry point for the acct_crawler_ruleset"
     description = ""
     kind        = "root"
     phase       = "http_request_firewall_custom"
 
     depends_on = [
-      cloudflare_ruleset.acct_ip_geo_ruleset
+      cloudflare_ruleset.acct_crawler_ruleset
     ]
 
     rules {
       action = "execute"
       action_parameters {
-        id = cloudflare_ruleset.acct_ip_geo_ruleset.id
+        id = cloudflare_ruleset.acct_crawler_ruleset.id
       }
       expression = "(cf.zone.plan eq \"ENT\")"
       description = ""
