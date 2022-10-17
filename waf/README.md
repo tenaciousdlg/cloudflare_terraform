@@ -14,7 +14,7 @@ The `zone_waf` directory focuses on the new Zone level WAF and its configuration
 │   ├── rulesets.tf  <== main configuration file, rules are created and implemented here
 │   ├── terraform.tfvars <== source of input variables for Terraform
 │   └── variables.tf  <== variables used in this Terraform config
-├── terraform.tfvars.example
+├── terraform.tfvars.example  <== Example hard-coded input variables for the Terraform repositories 
 └── zone_waf
     ├── README.md
     ├── main.tf  <== contains provider information
