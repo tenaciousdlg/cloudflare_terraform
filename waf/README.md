@@ -103,7 +103,8 @@ Example:
 
 _For the Account WAF_
 
-- A Host blocking rule is created as a filter then deployed to all Enterprise zones on the account. 
+- A blank user agent for `/robots.txt` blocking rule is created as a filter then deployed to all Enterprise zones on the account
+- The Exposed Credentials Managed ruleset is deployed to any Hostnames containing `cloudflarerocks.net`
 
 _For the Zone WAF_
 
