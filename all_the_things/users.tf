@@ -18,3 +18,6 @@ resource "cloudflare_account_member" "example_user" {
   ]
 }
 
+# Documentation at 
+# https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/account_roles
+# https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/account_member
