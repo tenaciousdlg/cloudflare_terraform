@@ -24,7 +24,7 @@ resource "cloudflare_ruleset" "account_managed_waf" {
         #  public_key = "keydata"
         #}
       }
-      expression  = "((not http.host contains \"cloudflarerocks.net\")) and (cf.zone.plan eq \"ENT\")"
+      expression  = "((not http.host contains \"domain.com\")) and (cf.zone.plan eq \"ENT\")"
       description = "account cloudflare managed ruleset"
       enabled     = true
     }
@@ -45,7 +45,7 @@ resource "cloudflare_ruleset" "account_managed_waf" {
         #  public_key = "keydata"
         #}
       }
-      expression  = "((not http.host contains \"cloudflarerocks.net\")) and (cf.zone.plan eq \"ENT\")"
+      expression  = "((not http.host contains \"domain.com\")) and (cf.zone.plan eq \"ENT\")"
       description = "account cloudflare OWASP core ruleset"
       enabled     = true      
     }
@@ -56,7 +56,7 @@ resource "cloudflare_ruleset" "account_managed_waf" {
         # UUID for Cloudflare Exposed Credentials Check ruleset
         id = "c2e184081120413c86c3ab7e14069605"
       }
-      expression  = "((not http.host contains \"cloudflarerocks.net\")) and (cf.zone.plan eq \"ENT\")"
+      expression  = "((not http.host contains \"domain.com\")) and (cf.zone.plan eq \"ENT\")"
       description = "account cloudflare exposed credentials check ruleset"
       enabled     = true
     }
