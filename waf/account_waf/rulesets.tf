@@ -3,7 +3,7 @@ resource "cloudflare_ruleset" "account_managed_waf" {
     # account_id tells Terraform which Cloudflare account to run on. As these rulesets operate at the account level we will provide it instead of the zone id
     account_id  = var.cloudflare_account_id
     name        = "account managed waf rulesets - terraform"
-    description = "account managed waf ruleset description"
+    description = ""
     kind        = "root"
     phase       = "http_request_firewall_managed"
     # Provisioning for Cloudflare Managed ruleset
@@ -90,11 +90,14 @@ resource "cloudflare_ruleset" "account_rl_filter" {
     phase       = "http_ratelimit"
     rules {
       action = "block"
+      description = "rate limit on request headers"
+      enabled = true
+      expression  = "(http.request.uri.query contains \"ratelimit=1\")"
       action_parameters {
         response {
-            status_code  = 429
-            content      = "{\"response\": \"block\"}"
-            content_type ="application/json"
+          content      = "{\"response\": \"block\"}"
+          content_type ="application/json"
+          status_code  = 429
         }
       }
       ratelimit {
@@ -103,9 +106,6 @@ resource "cloudflare_ruleset" "account_rl_filter" {
         requests_per_period = 2
         mitigation_timeout  = 60
       }
-      expression  = "(http.request.uri.query contains \"ratelimit=1\")"
-      description = "rate limit on request headers"
-      enabled     = true
     }
 }
 # resource to create/configure all account rate limit deployments
@@ -128,10 +128,10 @@ resource "cloudflare_ruleset" "account_rl" {
       enabled     = true
     }
 }
-# resource to create/configure all account custom rules deployment filters
-resource "cloudflare_ruleset" "account_custom_rules_filters" {
+# resource to create/configure account custom rules deployment filters
+resource "cloudflare_ruleset" "challenge_openproxy" {
     account_id  = var.cloudflare_account_id
-    name        = "custom rulesets filters for account"
+    name        = "open proxy challenge"
     description = ""
     kind        = "custom"
     phase       = "http_request_firewall_custom"
@@ -153,29 +153,78 @@ resource "cloudflare_ruleset" "account_custom_rules_filters" {
       enabled     = true
     }
     rules {
-      action      = "block"
+      action      = "managed_challenge"
       expression  = "(ip.src in $cf.open_proxies)"
       description = "block open proxies"
       enabled     = true
+    }
+}
+# another resource to create/configure account custom rule s deployment filters
+resource "cloudflare_ruleset" "block_russia" {
+    account_id = var.cloudflare_account_id
+    name = "block russian federation"
+    description = ""
+    kind = "custom"
+    phase = "http_request_firewall_custom"
+    rules {
+      action = "block"
+      description = "global rule to block all traffic from the russian federation - terraform"
+      enabled = true
+      expression = "(ip.geoip.country eq \"RU\")"
+    }
+}
+# another resource to create/configure account custom rule s deployment filters
+resource "cloudflare_ruleset" "block_belarus" {
+    account_id = var.cloudflare_account_id
+    name = "block belarus"
+    description = ""
+    kind = "custom"
+    phase = "http_request_firewall_custom"
+    rules {
+      action = "block"
+      description = "global rule to block all traffic from belarus - terraform"
+      enabled = true
+      expression = "(ip.geoip.country eq \"BY\")"
     }
 }
 # resource to create/configure all account custom rules deployments
 resource "cloudflare_ruleset" "account_custom_rules" {
     account_id  = var.cloudflare_account_id
     name        = "account custom firewall"
-    description = ""
+    description = "deploys rulesets"
     kind        = "root"
     phase       = "http_request_firewall_custom"
     depends_on  = [
-      cloudflare_ruleset.account_custom_rules_filters
+      cloudflare_ruleset.challenge_openproxy, cloudflare_ruleset.block_russia, cloudflare_ruleset.block_belarus
     ]
     rules {
-      action = "execute"
-      action_parameters {
-        id   = cloudflare_ruleset.account_custom_rules_filters.id
-      }
-      expression  = "(cf.zone.plan eq \"ENT\")"
-      description = ""
+      action      = "execute"
+      description = "challenge managed open proxies"
       enabled     = true
+      expression  = "(cf.zone.plan eq \"ENT\")"
+
+      action_parameters {
+        id = cloudflare_ruleset.challenge_openproxy.id
+      }
+    }
+    rules {
+      action      = "execute"
+      description = "block belarus"
+      enabled     = true
+      expression  = "(cf.zone.plan eq \"ENT\")"
+      action_parameters {
+        id      = cloudflare_ruleset.block_belarus.id
+        version = "latest"
+      }
+    }
+    rules {
+      action      = "execute"
+      description = "block russian federation"
+      enabled     = true
+      expression  = "(cf.zone.plan eq \"ENT\")"
+      action_parameters {
+        id      = cloudflare_ruleset.block_russia.id
+        version = "latest"
+      }
     }
 }
