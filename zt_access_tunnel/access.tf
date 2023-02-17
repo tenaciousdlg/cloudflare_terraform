@@ -29,7 +29,7 @@ resource "cloudflare_access_policy" "tunnel_app" {
   decision       = "allow"
 
   include {
-    email = ["chris@chrisdlg.com"]
+    email = ["var.cloudflare_email"]
     // DEBUG: Possibly https://github.com/cloudflare/terraform-provider-cloudflare/issues/1752
     //gsuite {
     //  identity_provider_id = cloudflare_access_identity_provider.google_workspace.id
