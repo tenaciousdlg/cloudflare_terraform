@@ -10,10 +10,15 @@ function base_os() {
 }
 # Installs the repoistory then package for cloudflared
 function cloudflared_install() {
-    echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/ focal main' | sudo tee /etc/apt/sources.list.d/cloudflare-main.list
-    sudo curl https://pkg.cloudflare.com/cloudflare-main.gpg -o /usr/share/keyrings/cloudflare-main.gpg
-    sudo apt-get update --assume-yes
-    sudo apt install --assume-yes cloudflared
+    # Add cloudflare gpg key
+    sudo mkdir -p --mode=0755 /usr/share/keyrings
+    curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+
+    # Add this repo to your apt repositories
+    echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared focal main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+    # install cloudflared
+    sudo apt-get update && sudo apt-get install cloudflared
 }
 # Creates the JSON file to run the cloudflared service
 function cloudflared_json() {
