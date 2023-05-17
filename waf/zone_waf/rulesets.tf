@@ -40,13 +40,16 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
       id      = "${data.external.cf_managed_ruleset.result.id}"
       version = "latest"
       overrides {
-        action = "log"
+        action = "managed_challenge"
         status = "enabled"
         categories {
           category = "wordpress"
           action   = "js_challenge"
           status   = "enabled"
         }
+      }
+      matched_data {
+        public_key = "0IdtYvPAOb5YANc/PslmH89PyEAhTznNJ2OUuTzBggw="
       }
     }
     expression  = "true"
