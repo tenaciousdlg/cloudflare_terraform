@@ -14,11 +14,11 @@ resource "cloudflare_tunnel_config" "access_tf_config" {
   tunnel_id  = cloudflare_tunnel.access_tf.id
   config {
     origin_request {
-        no_tls_verify = true
+        no_tls_verify = false
     }
     ingress_rule {
         hostname = cloudflare_record.access.hostname
-        service  = "http://localhost"
+        service  = "http://httpbin"
     }
     ingress_rule {
         service = "http_status:404"
