@@ -43,9 +43,9 @@ resource "google_compute_instance" "origin" {
     }
   }
 
-  provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${self.network_interface.0.access_config.0.nat_ip}, scripts/main.yml"
-  }
+#  provisioner "local-exec" {
+#    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook  -i ${self.network_interface.0.access_config.0.nat_ip}, scripts/main.yml"
+#  }
 
   metadata = {
       cf-terraform = "demo_tf_kitchensink"
