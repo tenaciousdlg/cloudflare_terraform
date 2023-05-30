@@ -42,7 +42,7 @@ resource "google_compute_instance" "origins" {
     "${path.module}/scripts/private_instances.sh", {
       config_file  = data.local_sensitive_file.cert.content,
       account      = var.cloudflare_account_id,
-      tunnel_id    = cloudflare_argo_tunnel.warp_tunnels[each.key].id,
+      tunnel_id    = cloudflare_tunnel.warp_tunnels[each.key].id,
       secret       = random_id.tunnel_secrets[each.key].b64_std
       }
   )

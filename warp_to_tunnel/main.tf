@@ -6,7 +6,7 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 3.0"
+      version = "~> 4.0"
     }
   }
 }
@@ -14,7 +14,6 @@ terraform {
 provider "cloudflare" {
   email      = var.cloudflare_email
   api_key    = var.cloudflare_token
-  account_id = var.cloudflare_account_id
 }
 
 provider "google" {
