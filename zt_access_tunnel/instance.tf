@@ -33,6 +33,6 @@ resource "google_compute_instance" "origin" {
   metadata_startup_script = <<SCRIPT
     docker network create demo-net
     docker run -d --name httpbin --net demo-net -p 80:80 kennethreitz/httpbin
-    docker run --name tunnel --net demo-net cloudflare/cloudflared:latest tunnel --no-autoupdate run --token ${cloudflare_tunnel.access_tf.tunnel_token}
+    docker run -d --name tunnel --net demo-net cloudflare/cloudflared:latest tunnel --no-autoupdate run --token ${cloudflare_tunnel.access_tf.tunnel_token}
     SCRIPT
 }
