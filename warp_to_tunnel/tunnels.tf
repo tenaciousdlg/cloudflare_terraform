@@ -5,7 +5,7 @@ resource "random_id" "tunnel_secrets" {
 }
 
 # A Named Tunnel resource called zero_trust_ssh_http
-resource "cloudflare_argo_tunnel" "warp_tunnels" {
+resource "cloudflare_tunnel" "warp_tunnels" {
     for_each   = var.instances
     account_id = var.cloudflare_account_id
     name       = "${each.key}_zt" 
