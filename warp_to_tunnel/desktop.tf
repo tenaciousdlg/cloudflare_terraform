@@ -6,7 +6,7 @@ resource "random_id" "namespace" {
 
 data "google_compute_image" "os" {
   # Ubuntu 20.04 
-  family  = "ubuntu-2004-lts"
+  family  = "ubuntu-2204-lts"
   project = "ubuntu-os-cloud"
 }
 
